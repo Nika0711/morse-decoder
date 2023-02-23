@@ -34,37 +34,34 @@ const MORSE_TABLE = {
     '--...':  '7',
     '---..':  '8',
     '----.':  '9',
-    '-----':  '0', 
+    '-----':  '0',
+    '     ':  ' ',
 };
 
-function decode(encodedText) {
-    let encodedChar = '';
-    let morseChar = '';
-    let decodedChar = '';
-    let decodedText = '';
-    let remainingText = encodedText;
-
-    while (remainingText) {
-        encodedChar = remainingText.substring(0, 10);
-        
-        if (encodedChar == '**********') {
-            decodedChar = ' ';
-        } else {
-            morseChar = encodedChar
-                .replace(/00/g, '')
-                .replace(/10/g, '.')
-                .replace(/11/g, '-');
-    
-            decodedChar = MORSE_TABLE[morseChar];  
-        }
-
-        decodedText += decodedChar;
-        remainingText = remainingText.substring(10);
-    } 
-    
-    return decodedText;
+const MORSE_SYMBOLS = {
+    '00': '',
+    '10': '.',
+    '11': '-',
+    '**': ' ',
 }
 
-module.exports = {
-    decode
+function decode(expr) {
+    let res = [];
+    for (let i = 0; i < expr.length; i += 10) {
+        res.push(expr.slice(i, i + 10));
+    }
+    res = res.map(elem => {
+                 let val = [];
+                 for (let i = 0; i < elem.length; i += 2) {
+                     val.push(elem.slice(i, i + 2));
+                 }
+                 return val;
+             })
+             .map(el => el.map(val => MORSE_SYMBOLS[val]))
+             .map(el => el.join(''))
+             .map(el => MORSE_TABLE[el])
+    console.log(res);
 }
+
+const expr = "00101010100000000010001011101000101110100000111111**********00001011110000111111000010111000101110100000111010";
+decode(expr)
