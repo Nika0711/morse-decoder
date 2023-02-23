@@ -1,73 +1,76 @@
+
+@romacher@Geo070684
+72 lines (67 sloc)  1.5 KB
+
 const MORSE_TABLE = {
-    '.-':     'a',
-    '-...':   'b',
-    '-.-.':   'c',
-    '-..':    'd',
-    '.':      'e',
-    '..-.':   'f',
-    '--.':    'g',
-    '....':   'h',
-    '..':     'i',
-    '.---':   'j',
-    '-.-':    'k',
-    '.-..':   'l',
-    '--':     'm',
-    '-.':     'n',
-    '---':    'o',
-    '.--.':   'p',
-    '--.-':   'q',
-    '.-.':    'r',
-    '...':    's',
-    '-':      't',
-    '..-':    'u',
-    '...-':   'v',
-    '.--':    'w',
-    '-..-':   'x',
-    '-.--':   'y',
-    '--..':   'z',
-    '.----':  '1',
-    '..---':  '2',
-    '...--':  '3',
-    '....-':  '4',
-    '.....':  '5',
-    '-....':  '6',
-    '--...':  '7',
-    '---..':  '8',
-    '----.':  '9',
-    '-----':  '0',
+    '.-': 'a',
+    '-...': 'b',
+    '-.-.': 'c',
+    '-..': 'd',
+    '.': 'e',
+    '..-.': 'f',
+    '--.': 'g',
+    '....': 'h',
+    '..': 'i',
+    '.---': 'j',
+    '-.-': 'k',
+    '.-..': 'l',
+    '--': 'm',
+    '-.': 'n',
+    '---': 'o',
+    '.--.': 'p',
+    '--.-': 'q',
+    '.-.': 'r',
+    '...': 's',
+    '-': 't',
+    '..-': 'u',
+    '...-': 'v',
+    '.--': 'w',
+    '-..-': 'x',
+    '-.--': 'y',
+    '--..': 'z',
+    '.----': '1',
+    '..---': '2',
+    '...--': '3',
+    '....-': '4',
+    '.....': '5',
+    '-....': '6',
+    '--...': '7',
+    '---..': '8',
+    '----.': '9',
+    '-----': '0',
+    '     ': ' ',
 };
-
+const MORSE_Number = {
+    '10': '.',
+    '11': '-',
+    '**': ' ',
+}
 function decode(expr) {
-    let encodedChar = '';
-    let morseChar = '';
-    let decodedChar = '';
-    let decodedText = '';
-    let remainingText = expr;
+    let arrFromNumber = [];
+    let arrFromTwo = [];
+    for (let i = 0; i < expr.length; i += 2) {
+        arrFromTwo.push(expr.slice(i, i + 2))
+    }
+    for (let i = 0; i < arrFromTwo.length; i = i + 5) {
+        arrFromNumber.push(arrFromTwo.slice(i, i + 5))
+    }
+    let result = [];
+    for (let i = 0; i < arrFromNumber.length; i++) {
+        result.push(arrFromNumber[i].filter(item => item != "00"))
+    }
+    console.log(result)
+    let answer = [];
+    answer = result.map(item => item.map(item => MORSE_Number[item])).map(item => item.join('')).map(item=> MORSE_TABLE[item]).join('')
 
-    while (remainingText) {
-        encodedChar = remainingText.substring(0, 10);
-        
-        if (expr == '**********') {
-            decodedChar = ' ';
-        } else {
-            morseChar = encodedChar
-                .replace(/00/g, '')
-                .replace(/10/g, '.')
-                .replace(/11/g, '-');
+   return answer
     
-            decodedChar = MORSE_TABLE[morseChar];  
-        }
-
-        decodedText += decodedChar;
-        remainingText = remainingText.substring(10);
-    } 
-    
-    return decodedText;
 }
 
-function decode (morseCode) {
-    return morseCode.split(' ').map(a => a.split(' ').map(b => MORSE_TABLE[b]).join(''); 
-}
+
+// const expr = "00101010100000000010001011101000101110100000111111**********00001011110000111111000010111000101110100000111010";
+// decode(expr)
+
 module.exports = {
     decode
 }
