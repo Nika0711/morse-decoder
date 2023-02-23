@@ -34,20 +34,20 @@ const MORSE_TABLE = {
     '--...':  '7',
     '---..':  '8',
     '----.':  '9',
-    '-----':  '0', 
+    '-----':  '0',
 };
 
-function decode(encodedText) {
+function decode(expr) {
     let encodedChar = '';
     let morseChar = '';
     let decodedChar = '';
     let decodedText = '';
-    let remainingText = encodedText;
+    let remainingText = expr;
 
     while (remainingText) {
         encodedChar = remainingText.substring(0, 10);
         
-        if (encodedChar == '**********') {
+        if (expr == '**********') {
             decodedChar = ' ';
         } else {
             morseChar = encodedChar
@@ -65,6 +65,9 @@ function decode(encodedText) {
     return decodedText;
 }
 
+function decode (morseCode) {
+    return morseCode.split(' ').map(a => a.split(' ').map(b => MORSE_TABLE[b]).join(''); 
+}
 module.exports = {
     decode
 }
