@@ -1,7 +1,4 @@
 
-@romacher@Geo070684
-72 lines (67 sloc)  1.5 KB
-
 const MORSE_TABLE = {
     '.-': 'a',
     '-...': 'b',
